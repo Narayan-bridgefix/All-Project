@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Task</title>
+</head>
+<body>
+    <h2>Update the task : {{task}}</h2>
+    <form action="{% url 'update' task.id %}" method="post">
+        {% csrf_token %}
+        <label for="">Enter Updated text</label>
+        <input type="text" name="task" value="{{task}}">
+        <br><br>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>

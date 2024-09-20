@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container mt-5">
+		<!-- Login form -->
+		<form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data" action="{% url 'validateotp' %}">
+			<h1 style="text-align: center;"><span style="color: green;">ToDo</span></h1>
+
+			{% csrf_token %} <!-- CSRF token for security -->
+			
+			<!-- Login heading -->
+			<h3></h3>
+			<hr>
+			<!-- Display error/success messages -->
+			{% if messages %}
+			<div class="alert alert-primary" role="alert">
+				{% for message in messages %}
+				{{ message }}
+				{% endfor %}
+			</div>
+			{% endif %}
+
+			<!-- Username input field -->
+			<div class="form-group">
+				<label for="exampleInputEmail1">Code</label>
+				<input type="text" class="form-control" name="otp" id="" aria-describedby="emailHelp"
+				placeholder="Enter OTP" required>
+			</div>
+			<input type="hidden" name="time"  id="time" value="{{time}}" onload="countdown()">
+			
+			
+			<input type="hidden" name="current_time" value="{{time}}">
+			<input type="hidden" name="password" value="{{password}}">
+			<input type="hidden" name="username" value="{{username}}">
+			<input type="hidden" name="firstname" value="{{first_name}}">
+			<input type="hidden" name="lastname" value="{{last_name}}">
+			<input type="hidden" name="verified_otp" value="{{otp}}">
+			<input type="hidden" name="is_opt_expire" id="txt" value="{{is_opt_expire}}">
+			
+			<!-- Submit button -->
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+		
+		<form method="post" action="{% url 'generateotp' %}" class="col-6 mx-auto card p-3 shadow-lg"  >
+			{% csrf_token %} <!-- CSRF token for security -->
+			
+			<input type="hidden" name="password" value="{{password}}">
+			<input type="hidden" name="username" value="{{username}}">
+			<input type="hidden" name="firstname" value="{{first_name}}">
+			<input type="hidden" name="lastname" value="{{last_name}}">
+			<button type="submit" class="btn btn-primary" disabled id="otpform">Generate OTP</button>
+			
+		</form>
+
+		<div class="container mt-5" style="text-align: center;" id="some_div">
+		</div>
+		<script>
+			var timeLeft = 3;
+			var elem = document.getElementById('some_div');
+			var timerId = setInterval(countdown, 1000);
+			
+			function countdown() {
+
+			let val=document.getElementById('time')
+			let now = new Date();
+			let hours = now.getHours();
+			let minutes = now.getMinutes();
+			let seconds = now.getSeconds();
+			var cur=`${hours}:${minutes}:${seconds}`
+			var hms1 = cur;   // your input string
+			var a1 = hms1.split(':'); // split it at the colons
+			var seconds1 = (+a1[0]) * 60 * 60 + (+a1[1]) * 60 + (+a1[2]);
+			
+			var hms2 = val.value;   // your input string
+			var a2 = hms2.split(':'); // split it at the colons
+			var seconds2 = (+a2[0]) * 60 * 60 + (+a2[1]) * 60 + (+a2[2]);
+			var diff=seconds1-seconds2 
+
+
+			timeLeft=30-diff
+			if (diff >= 30 && timeLeft<=0) {
+			clearTimeout(timerId);
+			document.getElementById('txt').value=true
+			elem.innerHTML = "OTP Expired";
+			document.getElementById("otpform").disabled = false;
+
+			} else {
+			elem.innerHTML = timeLeft + ' seconds remaining to OTP Expire';
+			timeLeft--;
+			}
+		}
+		</script>
+		<!-- generate otp -->
+		<!-- <form action="{% url 'generateotp' %}" method="post" class="col-6 mx-auto card p-3 shadow-lg">
+			{% csrf_token %}
+			<button type="submit" class="btn btn-primary">Get OTP</button>
+		</form> -->
+	</div>
+</body>
+</html>

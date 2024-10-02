@@ -2,22 +2,97 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FB</title>
 </head>
 <body>
-    {% load static %}
-    <h2>Welcome to FB</h2>
     <br>
-    <form method="post"  action="{% url 'upload' %}" enctype="multipart/form-data">
+    <a href="{% url 'user_request' %}" style="font-size: 20px;">Requests to User</a>
+    <br>
+    <br>
+    <a href="{% url 'list_all_request' %}" style="font-size: 20px;">Request by user</a>
+    <br>
+    <br>
+    <a href="{% url 'all_friend' %}" style="font-size: 20px;">Get all Friend</a>
+    <br>
+    <form method = "post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{form.as_p}}
-        <!-- <input type="file" -->
-        <button type="submit">Post</button>
-      </form>
-  
-    <br>
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
 
+    {% if image %}
+    {% for image in image %}
+    <div id="{{image.id}}">
+
+        <br>
+        <img src="{{image.image.url}}" alt="" style="border: 1px solid #ddd;border-radius: 4px;padding: 5px;width: 150px;">
+        <br>
+        <form action="{% url 'likecout' %}" method="post" style="float: left;">
+            {% csrf_token %}
+            <input type="hidden" name="image" value="{{image.id}}">
+            <button type="submit">Like {{image.like}}</button>
+        </form>
+        <form action="{% url 'unlikecout' %}" method="post" style="float: left;">
+            {% csrf_token %}
+            <input type="hidden" name="image" value="{{image.id}}">
+            <button type="submit">UnLike</button>
+            <br>
+        </form>
+        <br>
+        <br>
+        
+        
+        <div id="myDIV">
+            {% if  comments %}
+            {% for comment in comments %}
+            {% if comment.post_id.id == image.id %}
+            <ul id="commenttag-{{image.id}}">
+                <li>{{comment.comment}}</li><br>
+            </ul>
+            
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            <form  method="post" id="yourForm">
+                {% csrf_token %}
+                <!-- <label for="" style="float: left;">Write comment</label> -->
+                <input type="text" name="comment">
+                <br>
+                <input type="hidden" name="imageid" value="{{image.id}}" id="imagevalue">
+                <!-- <button type="submit">Post Comment</button> -->
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <br>
+    </div>
+        {% endfor %}
+        {% endif %}
+
+    <a href="{% url 'logout' %}">logout</a>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#yourForm').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "addcomment" %}',
+                    data: $('#yourForm').serialize(),
+                    success: function(response) {
+                        var value=response.comment
+                        var tagname=document.getElementById('imagevalue')
+                        var fulltag="commenttag-"+tagname.value
+                        $(`#${fulltag}`).append(`<br> <li>${value}</li> <br>`);    
+                    },
+                    error: function(response) {
+                        alert(response.error);  // or handle the error as needed
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- this script if for Like button -->
+     
 </body>
 </html>
-

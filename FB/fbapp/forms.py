@@ -1,8 +1,8 @@
 from django import forms
-from .models import UserData
+from .models import Post_Image
 
 class UserPost(forms.ModelForm):
     class Meta:
-        model = UserData
-        fields = ['post']
+        model = Post_Image
+        fields = ['image']
         

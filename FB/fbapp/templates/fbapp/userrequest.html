@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Users</h2>
+    {% for user in user %}
+    <div>
+        <ul>
+            <li>
+                {% comment %} {% for i in remove_user %} {% endcomment %}
+                {% comment %} {% if i.request_by_id != user.id %} {% endcomment %}
+                    {{user.username}}
+                {% comment %} {% endif %} {% endcomment %}
+                {% comment %} {% endfor %} {% endcomment %}
+
+                <form action="{% url 'send_request' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{user.id}}" name="userid">
+                    <input type="submit" value="request">
+                </form>
+            </li>
+        </ul>
+    </div>
+    {% endfor %}
+    <br>
+    <a href="{% url 'index' %}" style="font-size: 20px;">Home Page</a>
+    <br>
+</body>
+</html>

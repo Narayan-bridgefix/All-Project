@@ -37,3 +37,30 @@ class BookList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+from django.http import HttpResponse
+import logging,traceback
+
+logger = logging.getLogger('django')
+# logger2 = logging.getLogger('mylogger')
+
+def my_view(request):
+    try:
+        1 / 0  # Division by zero error
+        return HttpResponse("done")
+    except Exception as e:
+        logger.error("An error occurred: %s\n%s", e, traceback.format_exc())
+        return HttpResponse("error")
+
+mylogger = logging.getLogger('mylogger')
+def my_view2(request):
+    try:
+        1 / 0  # Division by zero error
+        return HttpResponse("done")
+    except Exception as e:
+        mylogger.warning("Need to solve")
+        mylogger.error("An error occurred: %s\n%s", e, traceback.format_exc())
+        return HttpResponse("error log2")

@@ -123,3 +123,57 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn="https://14e990eada6bd4e47a6054a551f5cb7c@o4508171695030272.ingest.de.sentry.io/4508171697586256",
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for tracing.
+    traces_sample_rate=1.0,
+    _experiments={
+        # Set continuous_profiling_auto_start to True
+        # to automatically start the profiler on when
+        # possible.
+        "continuous_profiling_auto_start": True,
+    },
+)
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'narayanpunase11@gmail.com' 
+EMAIL_HOST_PASSWORD = 'ftca emid esxi rrtv' 
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.SMTPHandler',
+            'mailhost': (EMAIL_HOST, EMAIL_PORT),
+            'fromaddr': EMAIL_HOST_USER,
+            'toaddrs': ['narayanpunase11@gmail.com'],  # List of recipients
+            'subject': 'Error From Narayan Server',
+            'credentials': (EMAIL_HOST_USER, EMAIL_HOST_PASSWORD),
+            'secure': () if EMAIL_USE_TLS else None,
+        },
+        'file':{
+            'filename':'mylogger.log',
+            'class':'logging.FileHandler'
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+        },
+        'mylogger': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    },
+
+}

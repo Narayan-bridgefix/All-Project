@@ -17,7 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
+def trigger_error(request):
+    division_by_zero = 1 / 0
+from app_1.urls import my_view,my_view2
 urlpatterns = [
+    path('sentry-debug/', trigger_error),
+    path('log/',my_view),
+    path('log2/',my_view2),
     path('admin/', admin.site.urls),
-    path('',include('app_1.urls'))
+    path('',include('app_1.urls')),
 ]
+
+from django.urls import path

@@ -7,6 +7,7 @@ urlpatterns = [
     path('ref-detail/<int:pk>',Student_view.as_view()),
     
     path('books/', BookList.as_view(), name='book-list'),
+    
 ]
 
 

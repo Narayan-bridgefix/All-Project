@@ -172,7 +172,7 @@ LOGGING = {
         },
         'mylogger': {
             'handlers': ['file'],
-            'level': 'DEBUG',
+            'level': 'ERROR',
         },
     },
 

@@ -38,3 +38,10 @@ Traceback (most recent call last):
     ~~^~~
 ZeroDivisionError: division by zero
 
+An error occurred: division by zero
+Traceback (most recent call last):
+  File "C:\Users\rspat\OneDrive\Desktop\Narayan's prj\hyperlink_apiview\pr_1\app_1\views.py", line 61, in my_view2
+    1 / 0  # Division by zero error
+    ~~^~~
+ZeroDivisionError: division by zero
+

@@ -123,20 +123,20 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-import sentry_sdk
+# import sentry_sdk
 
-sentry_sdk.init(
-    dsn="https://14e990eada6bd4e47a6054a551f5cb7c@o4508171695030272.ingest.de.sentry.io/4508171697586256",
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for tracing.
-    traces_sample_rate=1.0,
-    _experiments={
-        # Set continuous_profiling_auto_start to True
-        # to automatically start the profiler on when
-        # possible.
-        "continuous_profiling_auto_start": True,
-    },
-)
+# sentry_sdk.init(
+#     dsn="https://14e990eada6bd4e47a6054a551f5cb7c@o4508171695030272.ingest.de.sentry.io/4508171697586256",
+#     # Set traces_sample_rate to 1.0 to capture 100%
+#     # of transactions for tracing.
+#     traces_sample_rate=1.0,
+#     _experiments={
+#         # Set continuous_profiling_auto_start to True
+#         # to automatically start the profiler on when
+#         # possible.
+#         "continuous_profiling_auto_start": True,
+#     },
+# )
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com' 

@@ -43,8 +43,10 @@ INSTALLED_APPS = [
     'drf_viewset',
     'rest_framework.authtoken',
     'django_filters',
+    'import_export',
     
 ]
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -64,3 +64,15 @@ def my_view2(request):
         mylogger.warning("Need to solve")
         mylogger.error("An error occurred: %s\n%s", e, traceback.format_exc())
         return HttpResponse("error log2")
+    
+from rest_framework.reverse import reverse    
+from rest_framework.views import APIView
+from django.utils.timezone import now
+
+class APIRootView(APIView):
+    def get(self, request):
+        year = now().year
+        data = {
+            'year-summary-url': reverse('/testing', args=[], request=request)
+        }
+        return Response(data)

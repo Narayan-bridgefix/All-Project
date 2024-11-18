@@ -1,3 +1,4 @@
+print(380*20)
 s = input("Enter String with number :- ")
 a = "1234567890"
 # b = ""

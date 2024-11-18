@@ -28,6 +28,9 @@ class ListEmployee(APIView):
 
     
     def get(self,request,pk=None):
+        # import pdb;pdb.set_trace()
+        print(request.parsers)
+        print(request.user)
         if pk:
             emp=Employee.objects.get(pk=pk)
             serialize_emp = EmployeeSerializer(emp)
